@@ -5,22 +5,21 @@ use PHPMailer\PHPMailer\Exception;
 
 $base_path = dirname(__FILE__);
 
+
 require $base_path . '/../PHPMailer/Exception.php';
 require $base_path . '/../PHPMailer/PHPMailer.php';
 require $base_path . '/../PHPMailer/SMTP.php';
 
-// Incluir el archivo de conexión
-require $base_path . '/model/conexion.php';
 
 if (!empty($_POST["btnRegistrarcli"])) {
-    $nit = $_POST['nit_cliente'];
     $nombre = $_POST['nombres'];
     $apellido = $_POST['apellidos'];
     $email = $_POST['email'];
     $telefono = $_POST['telefono'];
 
-    if (!empty($nit) && !empty($nombre) && !empty($apellido) && !empty($email) && !empty($telefono)) {
-        $sql = $conexion->query("INSERT INTO clientes (id, nombre, apellido, email, telefono, id_rol) VALUES ('$nit','$nombre', '$apellido', '$email', '$telefono', 3)");
+
+    if (!empty($nombre) and !empty($apellido) and !empty($email) and !empty($telefono)) {
+        $sql = $conexion->query("INSERT INTO clientes (nombre, apellido, email, telefono, id_rol) VALUES ('$nombre', '$apellido', '$email', '$telefono', 3)");
 
         if ($sql === true) {
             $mail = new PHPMailer(true);
@@ -34,10 +33,6 @@ if (!empty($_POST["btnRegistrarcli"])) {
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 
-                // Habilitar depuración
-                $mail->SMTPDebug = 2; // Nivel de depuración
-                $mail->Debugoutput = 'html'; // Salida de depuración en formato HTML
-
                 $mail->setFrom('soporte.electrotechdh@gmail.com', 'Electrotech');
                 $mail->addAddress($email, $nombre);
 
@@ -45,21 +40,78 @@ if (!empty($_POST["btnRegistrarcli"])) {
                 $mail->isHTML(true);
                 $mail->Body = '<!DOCTYPE html>
                 <html lang="en">
+                
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <style>
-                        /* Estilos */
+                        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+                
+                        body {
+                            line-height: 1.6;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #fAfAfA;
+                        }
+                
+                        .container {
+                            max-width: 600px;
+                            margin: 20px auto;
+                            padding: 20px;
+                            background: #FAFAFA;
+                            border-radius: 5px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        }
+                
+                        img#logo {
+                            display: block;
+                            margin: 0 auto;
+                            width: 30%;
+                        }
+                
+                        img#promo {
+                            display: block;
+                            margin: 0 auto;
+                            width: 100%;
+                        }
+                
+                        h1 {
+                            text-align: center;
+                            font-family: "Roboto";
+                            font-weight: bold;
+                            color: #0077c0;
+                        }
+                
+                        p {
+                            font-family: "Roboto";
+                            margin-bottom: 2%;
+                        }
+                
+                        .derechos {
+                            min-width: 90%;
+                            margin-top: 5%;
+                            background: #0077c0;
+                            padding: 5%;
+                            border-radius: 5px;
+                            color: #FAFAFA;
+                            font-size: x-small;
+                        }
+                
+                        p.copy {
+                            text-align: center;
+                            font-weight: 500;
+                        }
                     </style>
                 </head>
+                
                 <body>
                     <div class="container">
-                        <img src="https://i.ibb.co/42pW0xD/Logo.png" alt="Logo de la empresa" id="logo">
+                        <img src="https://i.ibb.co/sWZ13PC/Logo.png" alt="Logo de la empresa" id="logo">
                         <h1>Hola ' . $nombre . ',<br></h1>
                         <p>En nombre de todo el equipo de ElectroTech, queremos darte una calurosa bienvenida. Estamos muy contentos de
                             que hayas decidido formar parte de nuestra comunidad.</p>
                         <br>
-                        <img src="https://i.ibb.co/2PVfMrf/Img-correo.png" alt="Img-correo" border="0" id="promo">
+                        <img src="https://i.ibb.co/gRy0x8P/Img-correo.png" alt="Img-correo" border="0" id="promo">
                         <div class="derechos">
                             Este mensaje y sus archivos adjuntos son confidenciales y están
                             dirigidos únicamente al destinatario especificado. Si usted ha
@@ -73,13 +125,15 @@ if (!empty($_POST["btnRegistrarcli"])) {
                             </p>
                         </div>
                     </div>
+                
                 </body>
+                
                 </html>';
 
                 // Enviar el correo electrónico
                 $mail->send();
 
-                echo '<div class="alert alert-success">Te has registrado exitosamente</div>';
+                echo '<div class="alert alert-success">Te has registrado exitosamente. Se ha enviado un correo de confirmación a tu dirección de correo electrónico </div>';
             } catch (Exception $e) {
                 echo '<div class="alert alert-danger">UPS! No se ha podido realizar el registro, intenta más tarde.</div>';
             }
@@ -90,4 +144,3 @@ if (!empty($_POST["btnRegistrarcli"])) {
         echo '<div class="alert alert-warning">Alguno de los campos no ha sido diligenciado</div>';
     }
 }
-?>
