@@ -2,19 +2,12 @@
     include "../../../model/conexion.php";
     include "../../../controller/sesion.php";
 
-    ini_set('display_errors', 1);
-    ini_set('error_reporting', E_ALL);
-
-
-
     $usuario = $_SESSION['usuario'];
 
     $consulta = "SELECT * FROM usuarios WHERE username='$usuario'";
     $resultado = $conexion->query($consulta);
 
     $usuarioData = $resultado->fetch_assoc();
-
-
 
     if(!empty($_POST)){
 
