@@ -1,6 +1,10 @@
 <?php
 include '../../../controller/mostrardatosperfil.php';
 
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
+
 ?>
 
 <!-- NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas -->
@@ -197,7 +201,7 @@ include '../../../controller/mostrardatosperfil.php';
     <script src="../../../public/js/menulateral.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        
+
     $(document).ready(function() {
         $('#search_proveedor').change(function(e) {
             e.preventDefault();
