@@ -1,6 +1,6 @@
 <?php
     include "../../../model/conexion.php";
-    session_start();
+    include "../../../controller/sesion.php";
 
 
     $usuario = $_SESSION['usuario'];
