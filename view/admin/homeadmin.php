@@ -2,7 +2,7 @@
 //NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header("Location: /Electrotech/view/login.php");
+    header("Location: https://electrotech.cloud/view/login.php");
     exit();
 }
 ?>
