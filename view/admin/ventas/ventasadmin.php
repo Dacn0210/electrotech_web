@@ -1,5 +1,7 @@
 <?php
 include '../../../controller/mostrardatosperfil.php';
+$var = md5($usuarioData['id']);
+echo $var
 ?>
 
 <!-- NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas -->
