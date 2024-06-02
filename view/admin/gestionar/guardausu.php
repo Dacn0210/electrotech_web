@@ -117,7 +117,7 @@ if ($conexion->query($sql)) {
                                 <p>Por favor, sigue estos pasos para comenzar:</p>
                                 <ol>
                                     <li>Utiliza las credenciales proporcionadas para iniciar sesión
-                                        en nuestra red interna</li>
+                                        en el siguiente enlace: https://electrotech.cloud/view/login.php</li>
                                     <li>Una vez que hayas iniciado sesión, te recomendamos que
                                         cambies tu contraseña temporal por una nueva más segura</li>
                                     <li>Explora nuestros sistemas y familiarízate con nuestras

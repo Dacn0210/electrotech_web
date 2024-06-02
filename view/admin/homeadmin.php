@@ -1,6 +1,10 @@
 <?php
 //NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas
-include "../../controller/sesion.php";
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: https://electrotech.cloud/view/login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -276,3 +280,4 @@ include "../../controller/sesion.php";
 </body>
 
 </html>
+
