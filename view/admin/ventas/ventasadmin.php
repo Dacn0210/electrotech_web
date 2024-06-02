@@ -474,7 +474,10 @@ echo $var
                     url: 'ajax.php',
                     type: "POST",
                     async: true,
-                    data: {action:action, codcliente:codcliente},
+                    data: {
+                        action:action, 
+                        codcliente:codcliente
+                    },
 
                     success: function(response)
                     {
