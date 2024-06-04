@@ -1,6 +1,5 @@
 <?php
 include '../../../controller/mostrardatosperfil.php';
-
 ?>
 
 <!-- NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas -->
@@ -473,7 +472,10 @@ include '../../../controller/mostrardatosperfil.php';
                     url: 'ajax.php',
                     type: "POST",
                     async: true,
-                    data: {action:action, codcliente:codcliente},
+                    data: {
+                        action:action, 
+                        codcliente:codcliente
+                    },
 
                     success: function(response)
                     {
