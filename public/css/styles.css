@@ -38,6 +38,7 @@ body {
 
 header {
   padding-top: 10px;
+  margin-bottom: 100px;
 }
 
 .titulo{
@@ -81,16 +82,13 @@ header {
 }
 
 /* Estilos para botones en .cont-info */
-img#img1 {
-  margin-top: 60px;
-}
 .cont-info button {
   font-weight: 500;
   color: var(--primary-color);
   display: inline-block;
   margin-top: 15px;
   background-color: transparent;
-  border-radius: 30px;
+  border-radius: 10px;
 }
 
 .cont-info button:hover {
@@ -119,58 +117,95 @@ p#parrafoOculto {
   margin-top: 20px;
 }
 
-article.col-lg-7.cont-info {
-  padding-top: 30px;
-  margin-bottom: 30px;
-}
-
-#objetivos {
-  background-color: var(--secondary-color);
-  color: var(--tertiary-color);
-  padding: 40px 0;
-}
-
-#carouselExampleSlidesOnly {
-  display: flex;
-  border-radius: 15px;
-  justify-content: center;
-  overflow-x: hidden;
-  background: url("../img/bg-objetivos.png") center/cover no-repeat;
-  padding: 40px 0;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.carousel-inner {
+/* Vision, Mision y Objetivo */
+#Mision-Vision-Obj{
+  width: 100%;
+  background: #014976;
+  position: relative;
+  padding: 60px 0 30px;
   text-align: center;
-  display: flex;
-  flex-wrap: nowrap;
-  margin: 0 -15px;
+  margin-bottom: 120px;
 }
 
-.carousel-item {
-  flex: 0 0 auto;
-  margin: 0 15px;
-}
-
-#carouselExampleSlidesOnly h3 {
+#Mision-Vision-Obj h2{
   color: var(--secondary-color);
-  margin-bottom: 10px;
+  font-weight: 700;
 }
 
-#carouselExampleSlidesOnly p {
-  max-width: 1000px;
-  color: var(--secondary-color);
-  line-height: 1.8;
-  text-align: center;
-  font-weight: 500;
+#Mision-Vision-Obj .row{
+  padding: 80px;
 }
 
-h2{
+#Mision-Vision-Obj .card-MVO{
+  background: var(--secondary-color);
+  height: 400px;
+  border-radius: 4px;
+  position: relative;
+  padding-top: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 40px ;
+  text-align: left;
+  transition: .4s;
+  margin-bottom: 40px ;
+}
+#Mision-Vision-Obj .card-MVO:hover{
+  transform: scale(1.1);
+}
+
+#Mision-Vision-Obj .card-MVO img{
+  background:var(--secondary-color);
+  border: 5px solid var(--primary-color);
+  width: 70px;
+  padding: 15px;
+  border-radius: 5px;
+  position: absolute;
+  top:-30px;
+  left: 30px;
+}
+
+#Mision-Vision-Obj .card-MVO h3{
+  text-align: right;
+  color: var(--primary-color);
+  font-size: 40px;
+  font-family: 'Roboto', Bold;
   margin-bottom: 20px;
 }
 
+#Mision-Vision-Obj .card-MVO h4{
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 15px;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+#Mision-Vision-Obj .card-MVO p{
+  font-size: 15px;
+  color: var(--tertiary-color);
+  text-align: left;
+  line-height: 30px ;
+}
+/* SOFTWARE */
+#software{
+  background: var(--primary-color);
+  position: relative;
+  padding: 60px 0 30px;
+  text-align: center;
+  margin-bottom: 120px;
+}
+#software h2{
+  color: var(--secondary-color);
+}
+
 /* EQUIPO DE TRABAJO */
+#Equipo{
+  position: relative;
+  padding: 60px 0 30px;
+  text-align: center;
+  margin-bottom: 120px;
+}
+
 .especial{
   justify-content: center;
 }
@@ -267,10 +302,10 @@ h2{
 
 /* Registro clientes */
 #clientes {
-  background: url(../img/bg-index.png);
+  background:var(--primary-color);
   background-repeat: round;
-  padding: 50px 0;
   color: var(--secondary-color);
+  padding: 60px 0 30px;
 }
 
 .container-form {
@@ -354,10 +389,6 @@ label#tyc {
   background: var(--tertiary-color);
   color: var(--secondary-color);
   padding: 30px 0;
-}
-
-.footer-info {
-  margin-bottom: 30px;
 }
 
 .footer-info h3,h4 {
