@@ -165,7 +165,7 @@ if (!isset($_SESSION['usuario'])) {
             </div>
             <div class="row body2">
                 <div class="col-md-8">
-                    <h3 class="subtitulo"><i class="fa-solid fa-chart-column"></i> Grafico de Ventas Mes Actual</h3>
+                    <h3 class="subtitulo"><i class="fa-solid fa-chart-column"></i> Grafico de Ventas</h3>
                     <?php include "../../controller/consultaGraficos.php" ?>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <canvas id="graficoVentas" max-width="100%" max-height="100%"></canvas>
