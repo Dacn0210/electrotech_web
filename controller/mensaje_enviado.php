@@ -17,8 +17,6 @@
             <img src="../public/img/Logo.png" alt="Logo de la empresa">
             <span id="check"><i class="fa-regular fa-circle-check"></i></span>
             <p>Se ha enviado un correo electrónico con el código de recuperación.</p>
-            <a href="../view/nuevacontraseña.php" class="btn btn-primary next"><i class="fa-solid fa-arrow-right"></i> Siguiente</a>
-        </div>
     </div>
 
     <script src="https://kit.fontawesome.com/909a90592e.js" crossorigin="anonymous"></script>
