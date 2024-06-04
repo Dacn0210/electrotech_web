@@ -167,24 +167,24 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="col-md-8">
                     <h3 class="subtitulo"><i class="fa-solid fa-chart-column"></i> Grafico de Ventas Mes Actual</h3>
                     <?php include "../../controller/consultaGraficos.php" ?>
-
-                    <canvas id="productosVendidosChart" width="400" height="300"></canvas>
-
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <canvas id="graficoVentas" max-width="100%" max-height="100%"></canvas>
                     <script>
-                        // Datos obtenidos de la consulta PHP
-                        var productos = <?php echo json_encode(array_keys($productos_mas_vendidos)); ?>;
-                        var cantidades = <?php echo json_encode(array_values($productos_mas_vendidos)); ?>;
+                        // Convertir el JSON de PHP a un array de JavaScript
+                        const ventasPorMes = <?php echo $ventas_por_mes_json; ?>;
 
-                        // Crear el gráfico
-                        var ctx = document.getElementById('productosVendidosChart').getContext('2d');
-                        var productosVendidosChart = new Chart(ctx, {
-                            type: 'bar',
+                        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+                        const ctx = document.getElementById('graficoVentas').getContext('2d');
+
+                        const graficoVentas = new Chart(ctx, {
+                            type: 'line',
                             data: {
-                                labels: productos,
+                                labels: meses,
                                 datasets: [{
-                                    label: 'Cantidad vendida',
-                                    data: cantidades,
-                                    backgroundColor: 'rgb(221,230,237, 0.8)',
+                                    label: 'Ventas por mes',
+                                    data: ventasPorMes,
+                                    backgroundColor: 'rgb(104, 157, 238, 0.2)',
                                     borderColor: 'rgb(1,73,114, 1)',
                                     borderWidth: 2
                                 }]
@@ -252,45 +252,6 @@ if (!isset($_SESSION['usuario'])) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row body2">
-                <div class="col-md-8">
-                    <h3 class="subtitulo"><i class="fa-solid fa-chart-line"></i> Estadísticas de ventas</h3>
-                    <?php include "../../controller/consultaGraficos.php" ?>
-
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <canvas id="graficoVentas" max-width="100%" max-height="100%"></canvas>
-
-                    <script>
-                        // Convertir el JSON de PHP a un array de JavaScript
-                        const ventasPorMes = <?php echo $ventas_por_mes_json; ?>;
-
-                        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-
-                        const ctx = document.getElementById('graficoVentas').getContext('2d');
-
-                        const graficoVentas = new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: meses,
-                                datasets: [{
-                                    label: 'Ventas por mes',
-                                    data: ventasPorMes,
-                                    backgroundColor: 'rgb(104, 157, 238, 0.2)',
-                                    borderColor: 'rgb(1,73,114, 1)',
-                                    borderWidth: 2
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
-                    </script>
                 </div>
             </div>
     </section>
