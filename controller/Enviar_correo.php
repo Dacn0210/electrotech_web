@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_email"])) {
 
             $mail->Subject = utf8_decode('Recuperación de contraseña');
             $mail->isHTML(true);
-            $mail->Body = 'Tu código de recuperación de contraseña es: ' . $codigo;
+            $mail->Body = 'Tu código de recuperación de contraseña es: ' . $codigo . 'e ingresa al siguiente enlace: https://electrotech.cloud/view/nuevacontrase%C3%B1a.php';
 
             $mail->send();
             header("Location: mensaje_enviado.php");
