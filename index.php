@@ -461,7 +461,7 @@
                             <h4>Links Útiles</h4>
                             <ul>
                                 <li><i class="fa-solid fa-chevron-right"></i> <a href="#header">Inicio</a></li>
-                                <li><i class="fa-solid fa-chevron-right"></i> <a href="#mision">Nuestra mision</a></li>
+                                <li><i class="fa-solid fa-chevron-right"></i> <a href="#Mision-Vision-Obj">Nosotros</a></li>
                                 <li><i class="fa-solid fa-chevron-right"></i> <a href="#escogenos">¿Porqué escoger
                                         Electrotech?</a></li>
                                 <li><i class="fa-solid fa-chevron-right"></i> <a href="#Equipo">Equipo de trabajo</a></li>
