@@ -16,7 +16,9 @@
         <div class="message-container">
             <img src="../public/img/Logo.png" alt="Logo de la empresa">
             <span id="check"><i class="fa-regular fa-circle-check"></i></span>
-            <p>Se ha enviado un correo electrónico con el código de recuperación.</p>
+            <p>Se ha enviado un correo electrónico con el código de recuperación</p>
+        </div>
+        <a href="../index.php"><i class="fa-solid fa-house"></i> Volver al inicio </a>
     </div>
 
     <script src="https://kit.fontawesome.com/909a90592e.js" crossorigin="anonymous"></script>
