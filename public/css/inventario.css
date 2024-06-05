@@ -478,3 +478,13 @@ section#busq_btn {
   display: flex;
   justify-content: space-between;
 }
+
+/* Modal Descripción */
+div#descripcion {
+  margin: auto;
+  max-width: 60%;
+}
+
+a.descripcion {
+  color: var(--tertiary-color);
+}
