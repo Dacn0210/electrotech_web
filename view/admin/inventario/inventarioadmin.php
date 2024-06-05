@@ -318,7 +318,7 @@ $dir = "imgs/"
                 }).then(response => response.json())
                 .then(data => {
 
-                    inputDescripcion.innerHTML = data.descripcion
+                    inputDescripcion.innerText = data.descripcion
                 
                 }).catch(err => console.log(err))
 
