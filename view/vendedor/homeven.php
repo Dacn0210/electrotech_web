@@ -136,25 +136,23 @@ if (!isset($_SESSION['usuario'])) {
                     <h3 class="subtitulo"><i class="fa-solid fa-chart-line"></i> Estadísticas de ventas</h3>
                     <?php include "../../controller/consultaGraficos.php" ?>
 
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <canvas id="graficoVentas" max-width="100%" max-height="100%"></canvas>
+                    <canvas id="productosVendidosChart" width="400" height="300"></canvas>
 
                     <script>
-                        // Convertir el JSON de PHP a un array de JavaScript
-                        const ventasPorMes = <?php echo $ventas_por_mes_json; ?>;
+                        // Datos obtenidos de la consulta PHP
+                        var productos = <?php echo json_encode(array_keys($productos_mas_vendidos)); ?>;
+                        var cantidades = <?php echo json_encode(array_values($productos_mas_vendidos)); ?>;
 
-                        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-
-                        const ctx = document.getElementById('graficoVentas').getContext('2d');
-
-                        const graficoVentas = new Chart(ctx, {
-                            type: 'line',
+                        // Crear el gráfico
+                        var ctx = document.getElementById('productosVendidosChart').getContext('2d');
+                        var productosVendidosChart = new Chart(ctx, {
+                            type: 'bar',
                             data: {
-                                labels: meses,
+                                labels: productos,
                                 datasets: [{
-                                    label: 'Ventas por mes',
-                                    data: ventasPorMes,
-                                    backgroundColor: 'rgb(104, 157, 238, 0.2)',
+                                    label: 'Cantidad vendida',
+                                    data: cantidades,
+                                    backgroundColor: 'rgb(221,230,237, 0.8)',
                                     borderColor: 'rgb(1,73,114, 1)',
                                     borderWidth: 2
                                 }]
@@ -168,6 +166,7 @@ if (!isset($_SESSION['usuario'])) {
                             }
                         });
                     </script>
+
                     <div class="sop">
                         <h3 class="subtitulo"><i class="fa-regular fa-calendar"></i> <span id="fecha"></span> </h3>
                         <p><strong>Contacto de Soporte:</strong> soporte.vendedor@gmail.com</p>
