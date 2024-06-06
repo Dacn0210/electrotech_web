@@ -20,7 +20,7 @@ if ($conexion->query($sql)) {
     $_SESSION['msg'] = "Poducto actualizado exitosamente";
 
     if ($_FILES['img']['error'] == UPLOAD_ERR_OK) {
-        $permitidos = array("image/jpg", "image/jpeg");
+        $permitidos = array("image/jpg", "image/jpeg", "image/png");
         if (in_array($_FILES['img']['type'], $permitidos)) {
 
             $dir = "imgs";
