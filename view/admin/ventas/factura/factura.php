@@ -152,9 +152,11 @@ $total      = 0;
 
 		.anulada {
 			position: absolute;
-			left: 50%;
-			top: 50%;
+			left: 5%;
+			top: 40%;
 			transform: translateX(-50%) translateY(-50%);
+			width: 90%;
+			transform: rotate(-45deg);
 		}
 	</style>
 
