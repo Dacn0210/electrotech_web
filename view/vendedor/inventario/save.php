@@ -23,7 +23,7 @@ if ($conexion->query($sql)) {
         $permitidos = array("image/jpg", "image/jpeg", "image/png");
         if (in_array($_FILES['img']['type'], $permitidos)) {
 
-            $dir = "imgs";
+            $dir = "../../admin/inventario/imgs";
 
             $info_img = pathinfo($_FILES['img']['name']);
             $info_img['extension'];
@@ -47,5 +47,5 @@ if ($conexion->query($sql)) {
     $_SESSION['color'] = "danger";
     $_SESSION['msg'] = "Error al guardar la imagen";
 }
-echo '<script>window.location.href = "inventarioadmin.php";</script>';
+echo '<script>window.location.href = "inventarioven.php";</script>';
 exit();
