@@ -2,15 +2,12 @@
     include "../../../model/conexion.php";
     session_start();
 
-
     $usuario = $_SESSION['usuario'];
 
     $consulta = "SELECT * FROM usuarios WHERE username='$usuario'";
     $resultado = $conexion->query($consulta);
 
     $usuarioData = $resultado->fetch_assoc();
-
-
 
     if(!empty($_POST)){
 

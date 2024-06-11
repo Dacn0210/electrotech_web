@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
-$dir = "../view/admin/inventario/imgs"
+$dir = "imgs/"
 
 ?>
 <!DOCTYPE html>
@@ -23,8 +23,7 @@ $dir = "../view/admin/inventario/imgs"
 </head>
 
 <body>
-    <!-- Barra de navegación lateral -->
-    <nav class="sidebar close">
+<nav class="sidebar close">
         <header>
             <i class="fa-solid fa-bars toggle"></i>
         </header>
@@ -33,40 +32,45 @@ $dir = "../view/admin/inventario/imgs"
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="../homeven.php">
+                        <a href="../homeadmin.php">
                             <i class="fa-solid fa-house"></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioven.php">
+                        <a href="../inventario/inventarioadmin.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/ventasven.php">
+                        <a href="../gestionar/gestionarusuarios.php">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <span class="text nav-text">Gestionar</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="../ventas/ventasadmin.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/facturasven.php">
+                        <a href="../ventas/facturasadmin.php">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-
                 </ul>
             </div>
 
             <div class="bottom-content">
                 <li class="nav-link user-info">
                     <i class="fa-solid fa-user"></i>
-                    <span class="text nav-text">Vendedor(a)</span>
+                    <span class="text nav-text">Administrador(a)</span>
                 </li>
                 <li class="nav-link">
-                    <a href="perfil.php">
+                    <a href="../configuracion/perfil.php">
                         <i class="fa-solid fa-gear"></i>
                         <span class="text nav-text">Configuracion</span>
                     </a>
@@ -83,15 +87,15 @@ $dir = "../view/admin/inventario/imgs"
     <section class="home">
         <section id="busqueda">
             <div>
-                <h3 class="text-center mt-4"><i class="fa-solid fa-boxes-stacked"></i> Gestionar Inventario</h3>
+            <h3 class="text-center mt-4"><i class="fa-solid fa-boxes-stacked"></i> Gestionar Inventario</h3>
             </div>
-
+            
             <div id="imglog">
                 <img id="logo" src="../../../public/img/logo2.svg" alt="Logo">
             </div>
-
+            
         </section>
-        <section id="busq_btn">
+        <section id="busq_btn" >
             <div id="busq">
                 <label><i class="fa-solid fa-magnifying-glass lupa"></i></label>
                 <input id="campobus" type="text" placeholder="Buscar">
@@ -100,14 +104,14 @@ $dir = "../view/admin/inventario/imgs"
         </section>
         <section>
             <?php
-            if (isset($_SESSION['msg']) && isset($_SESSION['color'])) { ?>
+            if (isset($_SESSION['msg']) && isset($_SESSION['color']) ) { ?>
 
                 <div class="alert alert-<?= $_SESSION['color']; ?> alert-dismissible fade show" role="alert">
                     <?= $_SESSION['msg']; ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 
-            <?php
+            <?php 
                 unset($_SESSION['color']);
                 unset($_SESSION['msg']);
             }  ?>
@@ -139,12 +143,14 @@ $dir = "../view/admin/inventario/imgs"
                 <thead>
                     <tr>
                         <th class="first">ID</th>
-                        <th id='nombre'>Nombre</th>
+                        <th  id='nombre'>Nombre</th>
                         <th id='img'>Imagen</th>
                         <th id='desc'>Descripción</th>
                         <th id='precio'>Precio</th>
                         <th id='proveedor'>Proveedor</th>
                         <th id='stock'>Stock</th>
+                        <th class="last">Acciones</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -153,14 +159,18 @@ $dir = "../view/admin/inventario/imgs"
                         echo "<tr>";
                         echo "<td class='first'>" . $row_productos['id'] . "</td>";
                         echo "<td>" . $row_productos['nombre'] . "</td>";
-                    ?>
-                        <td id="img"><img src="<?= $dir . $row_productos['id'] . '.jpg?n=' . time(); ?>" width="25%" style="padding: 2px;"></td>
-                        <?php
+                        ?>
+                        <td id="img"><img src="<?= $dir . $row_productos['id'] . '.jpg?n='.time( ); ?>" width="25%" style="padding: 2px;"></td>
+                        <?php 
                         echo "<td class='descripcion-corta'> <a href='#' class='descripcion' data-bs-toggle='modal' data-bs-target='#descModal' data-bs-id=" . $row_productos['id'] . ">" . $row_productos['descripcion'] . "</a></td>";
                         echo "<td>$" . $row_productos['precio'] . "</td>";
                         echo "<td>" . $row_productos['proveedor'] . "</td>";
                         echo "<td>" . $row_productos['stock'] . "</td>";
-                        ?>
+                    ?><td class='last iconos'>
+                            <a href='#' class='linkicono' data-bs-toggle="modal" data-bs-target="#editModal" data-bs-id="<?= $row_productos['id']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+
+                            <a href="#" class="linkicono" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="<?= $row_productos['id']; ?>"><i class="fa-solid fa-trash-can"></i></a>
+                        </td>
                     <?php echo "</tr>";
                     }
                     ?>
@@ -169,24 +179,26 @@ $dir = "../view/admin/inventario/imgs"
             <div class="paginador">
                 <ul>
                     <?php
-                    if ($pagina != 1) {
-
-                    ?>
+                    if ($pagina != 1){  
+                    
+                    ?> 
                         <li class="pag"><a href="?pagina=<?php echo 1; ?>" class="pag"><i class="fas fa-step-backward"></i></a></li>
                         <li class="pag"><a href="?pagina=<?php echo $pagina - 1; ?>" class="pag"><i class="fas fa-backward"></i></a></li>
 
-                    <?php
-                    }
-                    for ($i = 1; $i <= $total_paginas; $i++) {
+                    <?php 
+                        } 
+                        for ($i = 1; $i <= $total_paginas; $i++){
 
-                        if ($i == $pagina) {
-                            echo '<li class="pageSelected">' . $i . '</li>';
-                        } else {
-                            echo '<li><a href="?pagina=' . $i . '">' . $i . '</a></li>';
-                        }
-                    }
+                            if($i == $pagina){
+                                echo '<li class="pageSelected">'.$i.'</li>';
+                            }else{
+                                echo '<li><a href="?pagina='.$i.'">'.$i.'</a></li>';
+                            }
 
-                    if ($pagina != $total_paginas) {
+                        }   
+
+                        if($pagina != $total_paginas)
+                        {
                     ?>
                         <li><a href="?pagina=<?php echo $pagina + 1; ?>"><i class="fas fa-forward"></i></a></li>
                         <li><a href="?pagina=<?php echo $total_paginas; ?>"><i class="fas fa-step-forward"></i></a></li>
@@ -222,7 +234,7 @@ $dir = "../view/admin/inventario/imgs"
         let editModal = document.getElementById('editModal')
         let deleteModal = document.getElementById('deleteModal')
         let descModal = document.getElementById('descModal')
-
+        
         addModal.addEventListener('shown.bs.modal', event => {
             addModal.querySelector('.modal-body #nombre').focus()
         })
@@ -285,9 +297,9 @@ $dir = "../view/admin/inventario/imgs"
         })
 
         descModal.addEventListener('hide.bs.modal', event => {
-
+            
             descModal.querySelector('.modal-body #descripcion').innerHTML = ""
-
+            
         })
 
         descModal.addEventListener('shown.bs.modal', event => {
@@ -307,7 +319,7 @@ $dir = "../view/admin/inventario/imgs"
                 .then(data => {
 
                     inputDescripcion.innerText = data.descripcion
-
+                
                 }).catch(err => console.log(err))
 
         })
@@ -320,11 +332,11 @@ $dir = "../view/admin/inventario/imgs"
 
             campoBusqueda.addEventListener("keyup", function() {
                 const textoBusqueda = campoBusqueda.value.toLowerCase();
-
+                
                 for (let i = 0; i < filas.length; i++) {
                     const datosFila = filas[i].getElementsByTagName("td");
                     let coincide = false;
-
+                    
                     for (let j = 0; j < datosFila.length; j++) {
                         if (datosFila[j].textContent.toLowerCase().includes(textoBusqueda)) {
                             coincide = true;

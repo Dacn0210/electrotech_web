@@ -17,51 +17,57 @@ include '../../../controller/mostrardatosperfil.php';
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../../public/img/icono.ico" />
     <link rel="stylesheet" href="../../../public/css/ventas.css">
+
 </head>
 
 <body>
 
-        <!-- Barra de navegación lateral -->
-        <nav class="sidebar close">
+    <!-- Barra de navegación lateral -->
+    <nav class="sidebar close">
         <header>
             <i class="fa-solid fa-bars toggle"></i>
         </header>
 
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="../homeven.php">
+                        <a href="../homeadmin.php">
                             <i class="fa-solid fa-house"></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioven.php">
+                        <a href="../inventario/inventarioadmin.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/ventasven.php">
+                        <a href="../gestionar/gestionarusuarios.php">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <span class="text nav-text">Gestionar</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="../ventas/ventasadmin.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/facturasven.php">
+                        <a href="../ventas/facturasadmin.php">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-                    
                 </ul>
             </div>
 
             <div class="bottom-content">
                 <li class="nav-link user-info">
                     <i class="fa-solid fa-user"></i>
-                    <span class="text nav-text">Vendedor(a)</span>
+                    <span class="text nav-text">Administrador(a)</span>
                 </li>
                 <li class="nav-link">
                     <a href="../configuracion/perfil.php">
@@ -70,7 +76,7 @@ include '../../../controller/mostrardatosperfil.php';
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="../../controller/logout.php">
+                    <a href="../../../controller/logout.php">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span class="text nav-text">Cerrar sesión</span>
                     </a>
@@ -216,7 +222,7 @@ include '../../../controller/mostrardatosperfil.php';
             var action = 'searchCliente';
 
             $.ajax({
-                url: 'ajaxven.php',
+                url: 'ajax.php',
                 type: 'POST',
                 async: true,
                 data: {
@@ -265,7 +271,7 @@ include '../../../controller/mostrardatosperfil.php';
         $('#form_new_cliente_venta').submit(function(e) {
             e.preventDefault();
             $.ajax({
-                url: 'ajaxven.php',
+                url: 'ajax.php',
                 type: 'POST',
                 async: true,
                 data: $('#form_new_cliente_venta').serialize(),
@@ -305,7 +311,7 @@ include '../../../controller/mostrardatosperfil.php';
 
             if (producto != '') {
                 $.ajax({
-                    url: 'ajaxven.php',
+                    url: 'ajax.php',
                     type: 'POST',
                     async: true,
                     data: {
@@ -378,7 +384,7 @@ include '../../../controller/mostrardatosperfil.php';
                 var action = 'addProductoDetalle';
 
                 $.ajax({
-                    url: 'ajaxven.php',
+                    url: 'ajax.php',
                     type: 'POST',
                     async: true,
                     data: {
@@ -433,7 +439,7 @@ include '../../../controller/mostrardatosperfil.php';
                  var action = 'anularVenta';
 
                  $.ajax({
-                    url: 'ajaxven.php',
+                    url: 'ajax.php',
                     type: "POST",
                     async: true,
                     data: {action:action},
@@ -463,10 +469,13 @@ include '../../../controller/mostrardatosperfil.php';
                  var codcliente = $('#idcliente').val();
 
                  $.ajax({
-                    url: 'ajaxven.php',
+                    url: 'ajax.php',
                     type: "POST",
                     async: true,
-                    data: {action:action, codcliente:codcliente},
+                    data: {
+                        action:action, 
+                        codcliente:codcliente
+                    },
 
                     success: function(response)
                     {
@@ -497,7 +506,7 @@ include '../../../controller/mostrardatosperfil.php';
         var id_detalle = correlativo;
 
         $.ajax({
-            url: 'ajaxven.php',
+            url: 'ajax.php',
             type: 'POST',
             async: true,
             data: {
@@ -551,7 +560,7 @@ include '../../../controller/mostrardatosperfil.php';
         var user = id;
 
         $.ajax({
-            url: 'ajaxven.php',
+            url: 'ajax.php',
             type: 'POST',
             async: true,
             data: {

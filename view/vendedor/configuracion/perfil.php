@@ -1,5 +1,4 @@
 <?php include '../../../controller/MostrarDatosPerfil.php' ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,50 +14,54 @@
 </head>
 
 <body>
-    <!-- Barra de navegación lateral -->
     <nav class="sidebar close">
         <header>
             <i class="fa-solid fa-bars toggle"></i>
         </header>
 
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="../homeven.php">
+                        <a href="../homeadmin.php">
                             <i class="fa-solid fa-house"></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioven.php">
+                        <a href="../inventario/inventarioadmin.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/ventasven.php">
+                        <a href="../gestionar/gestionarusuarios.php">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <span class="text nav-text">Gestionar</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="../ventas/ventasadmin.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/facturasven.php">
+                        <a href="../ventas/facturasadmin.php">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-                    
                 </ul>
             </div>
 
             <div class="bottom-content">
                 <li class="nav-link user-info">
                     <i class="fa-solid fa-user"></i>
-                    <span class="text nav-text">Vendedor(a)</span>
+                    <span class="text nav-text">Administrador(a)</span>
                 </li>
                 <li class="nav-link">
-                    <a href="perfil.php">
+                    <a href="../configuracion/perfil.php">
                         <i class="fa-solid fa-gear"></i>
                         <span class="text nav-text">Configuracion</span>
                     </a>
@@ -77,11 +80,11 @@
         <div class="container head">
             <img id="logo" src="../../../public/img/logo2.svg" alt="logo">
         </div>
-        <h2><strong><i class="fa-solid fa-id-card"></i> Perfil de usuario</strong></h2>
+        <h2><strong><i class="fa-regular fa-id-card"></i> Perfil de usuario</strong></h2>
         <div class="container datos">
             <?php
             if (isset($_SESSION['success_message'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo $_SESSION['success_message'];
                 echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
                 echo '</div>';

@@ -1,8 +1,8 @@
-<!-- NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas -->
 <?php
+//NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header("Location: /Electrotech/view/login.php");
+    header("Location: https://electrotech.cloud/view/login.php");
     exit();
 }
 ?>
@@ -19,7 +19,8 @@ if (!isset($_SESSION['usuario'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../public/img/icono.ico" />
-    <link rel="stylesheet" href="../../public/css/homeven.css">
+    <link rel="stylesheet" href="../../public/css/homeadmin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -34,40 +35,45 @@ if (!isset($_SESSION['usuario'])) {
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="homeven.php">
+                        <a href="homeadmin.php">
                             <i class="fa-solid fa-house"></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="inventario/inventarioven.php">
+                        <a href="inventario/inventarioadmin.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="ventas/ventasven.php">
+                        <a href="gestionar/gestionarusuarios.php">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <span class="text nav-text">Gestionar</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="ventas/ventasadmin.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="ventas/facturasven.php">
+                        <a href="ventas/facturasadmin.php">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-
                 </ul>
             </div>
 
             <div class="bottom-content">
                 <li class="nav-link user-info">
                     <i class="fa-solid fa-user"></i>
-                    <span class="text nav-text">Vendedor(a)</span>
+                    <span class="text nav-text">Administrador(a)</span>
                 </li>
                 <li class="nav-link">
-                    <a href="../vendedor/configuracion/perfil.php">
+                    <a href="configuracion/perfil.php">
                         <i class="fa-solid fa-gear"></i>
                         <span class="text nav-text">Configuracion</span>
                     </a>
@@ -89,7 +95,7 @@ if (!isset($_SESSION['usuario'])) {
                 <!-- Encabezado con saludo al usuario -->
                 <div class="col-md-10">
                     <h2 id="titulo">¡Bienvenido, <?php echo $_SESSION['usuario']; ?>!</h2>
-                    <p>Es un placer tenerte aquí.</p>
+                    <p>¡Qué bueno es verte de nuevo!</p>
                 </div>
                 <div class="col-md-2">
                     <img src="../../public/img/logo2.svg" alt="Logo">
@@ -101,13 +107,22 @@ if (!isset($_SESSION['usuario'])) {
                 include '../../controller/informacionController.php';
                 ?>
                 <!-- Paneles informativos -->
-                <h3 class="subtitulo"><i class="fa-solid fa-thumbtack"></i> Resumen de ventas</h3>
+                <h3 class="subtitulo"><i class="fa-solid fa-thumbtack"></i> Paneles informativos</h3>
                 <div class="col-md-4">
                     <div class="panel">
-                        <div class="icono"><i class="fa-solid fa-shopping-bag"></i></div>
+                        <div class="icono"><i class="fa-solid fa-user-tie"></i></div>
                         <div class="textos">
-                            <h2 class="subtitulo"><?php echo $total_ventas_mes; ?></h2>
-                            <p>Ventas realizadas este mes</p>
+                            <h2><?php echo $total_usuarios; ?></h2>
+                            <p>Usuarios registrados</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel">
+                        <div class="icono"><i class="fa-solid fa-users"></i></div>
+                        <div class="textos">
+                            <h2><?php echo $total_clientes; ?></h2>
+                            <p>Clientes registrados</p>
                         </div>
                     </div>
                 </div>
@@ -122,6 +137,15 @@ if (!isset($_SESSION['usuario'])) {
                 </div>
                 <div class="col-md-4">
                     <div class="panel">
+                        <div class="icono"><i class="fa-solid fa-shopping-bag"></i></div>
+                        <div class="textos">
+                            <h2 class="subtitulo"><?php echo $total_ventas_mes; ?></h2>
+                            <p>Ventas realizadas este mes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel">
                         <div class="icono"><i class="fa-solid fa-money-check-dollar"></i></div>
                         <div class="textos">
                             <h2><?php echo $total_productos_vendidos_mes; ?></h2>
@@ -129,30 +153,38 @@ if (!isset($_SESSION['usuario'])) {
                         </div>
                     </div>
                 </div>
-                
+                <div class="col-md-4">
+                    <div class="panel">
+                        <div class="icono"><i class="fa-solid fa-hand-holding-usd"></i></div>
+                        <div class="textos">
+                            <h2 class="subtitulo">$ <?php echo number_format($total_ingresos_mes, 0, '.', "'"); ?></h2>
+                            <p>Ingresos generados este mes</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row body2">
                 <div class="col-md-8">
-                    <h3 class="subtitulo"><i class="fa-solid fa-chart-line"></i> Estadísticas de ventas</h3>
+                    <h3 class="subtitulo"><i class="fa-solid fa-chart-column"></i> Grafico de Ventas</h3>
                     <?php include "../../controller/consultaGraficos.php" ?>
-
-                    <canvas id="productosVendidosChart" width="400" height="300"></canvas>
-
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <canvas id="graficoVentas" max-width="100%" max-height="100%"></canvas>
                     <script>
-                        // Datos obtenidos de la consulta PHP
-                        var productos = <?php echo json_encode(array_keys($productos_mas_vendidos)); ?>;
-                        var cantidades = <?php echo json_encode(array_values($productos_mas_vendidos)); ?>;
+                        // Convertir el JSON de PHP a un array de JavaScript
+                        const ventasPorMes = <?php echo $ventas_por_mes_json; ?>;
 
-                        // Crear el gráfico
-                        var ctx = document.getElementById('productosVendidosChart').getContext('2d');
-                        var productosVendidosChart = new Chart(ctx, {
-                            type: 'bar',
+                        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+                        const ctx = document.getElementById('graficoVentas').getContext('2d');
+
+                        const graficoVentas = new Chart(ctx, {
+                            type: 'line',
                             data: {
-                                labels: productos,
+                                labels: meses,
                                 datasets: [{
-                                    label: 'Cantidad vendida',
-                                    data: cantidades,
-                                    backgroundColor: 'rgb(221,230,237, 0.8)',
+                                    label: 'Ventas por mes',
+                                    data: ventasPorMes,
+                                    backgroundColor: 'rgb(104, 157, 238, 0.2)',
                                     borderColor: 'rgb(1,73,114, 1)',
                                     borderWidth: 2
                                 }]
@@ -172,8 +204,9 @@ if (!isset($_SESSION['usuario'])) {
                         <p><strong>Contacto de Soporte:</strong> soporte.vendedor@gmail.com</p>
                     </div>
                 </div>
+
                 <div class="col-md-4">
-                    <h3 class="subtitulo"><i class="fa-solid fa-bell"></i> Notificaciones de stock</h3>
+                    <h3 class="subtitulo"><i class="fa-solid fa-bell"></i> Notificaciones de productos</h3>
                     <div class="notifications">
                         <ul>
                             <?php
@@ -221,7 +254,6 @@ if (!isset($_SESSION['usuario'])) {
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
     <!-- Scripts al final del cuerpo del documento -->
