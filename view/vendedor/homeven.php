@@ -66,7 +66,7 @@ if (!isset($_SESSION['usuario'])) {
                     <span class="text nav-text">Vendedor(a)</span>
                 </li>
                 <li class="nav-link">
-                    <a href="../configuracion/perfil.php">
+                    <a href="configuracion/perfil.php">
                         <i class="fa-solid fa-gear"></i>
                         <span class="text nav-text">Configuracion</span>
                     </a>
