@@ -94,7 +94,7 @@ $dir = "imgs/"
                     <button type="submit" class="btn_view"><i class="fas fa-search"></i></button>
                 </form>
             </div>
-            <a href="ventasadmin.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
+            <a href="ventasven.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
         </section>
         
         <section>
