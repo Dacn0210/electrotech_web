@@ -196,6 +196,9 @@ $dir = "../../admin/inventario/imgs/"
                 </ul>
             </div>
         </section>
+        <div id="btns">
+            <a href="#" id="addprod" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa-solid fa-plus"></i> Agregar Producto</a>
+        </div>
     </section>
 
     <!-- Consulta SQL -->
@@ -209,12 +212,25 @@ $dir = "../../admin/inventario/imgs/"
 
     <?php $proveedores->data_seek(0); ?>
 
-
+    <?php include 'addModal.php'; ?>
     <?php include 'descModal.php'; ?>
 
 
     <script>
+        let addModal = document.getElementById('addModal')
         let descModal = document.getElementById('descModal')
+
+        addModal.addEventListener('shown.bs.modal', event => {
+            addModal.querySelector('.modal-body #nombre').focus()
+        })
+
+        addModal.addEventListener('hide.bs.modal', event => {
+            addModal.querySelector('.modal-body #nombre').value = ""
+            addModal.querySelector('.modal-body #descripcion').value = ""
+            addModal.querySelector('.modal-body #precio').value = ""
+            addModal.querySelector('.modal-body #proveedor').value = ""
+            addModal.querySelector('.modal-body #stock').value = ""
+        })
         
         descModal.addEventListener('hide.bs.modal', event => {
             
