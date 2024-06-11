@@ -1,6 +1,6 @@
 
 <!-- Modal -->
-<div class="modal fade" id="descModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade" id="descModal" tabindex="-1" aria-labelledby="descModalLabel" aria-hidden="true">
   
   <div class="modal-dialog modal-lg">
     
