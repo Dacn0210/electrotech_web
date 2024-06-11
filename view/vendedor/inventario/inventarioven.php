@@ -1,10 +1,12 @@
-<!-- NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas -->
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: /Electrotech/view/login.php");
     exit();
 }
+
+$dir = "view\admin\inventario\imgs"
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,21 +15,22 @@ if (!isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electrotech | Inventario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../../public/img/icono.ico" />
     <link rel="stylesheet" href="../../../public/css/inventario.css">
 </head>
 
 <body>
+    <!-- Barra de navegación lateral -->
     <nav class="sidebar close">
         <header>
             <i class="fa-solid fa-bars toggle"></i>
         </header>
 
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="../homeven.php">
@@ -53,7 +56,7 @@ if (!isset($_SESSION['usuario'])) {
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-                    
+
                 </ul>
             </div>
 
@@ -63,13 +66,13 @@ if (!isset($_SESSION['usuario'])) {
                     <span class="text nav-text">Vendedor(a)</span>
                 </li>
                 <li class="nav-link">
-                    <a href="../configuracion/perfil.php">
+                    <a href="perfil.php">
                         <i class="fa-solid fa-gear"></i>
                         <span class="text nav-text">Configuracion</span>
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="../../controller/logout.php">
+                    <a href="../../../controller/logout.php">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span class="text nav-text">Cerrar sesión</span>
                     </a>
@@ -77,19 +80,18 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
     </nav>
-
     <section class="home">
         <section id="busqueda">
             <div>
-            <h3 class="text-center mt-4"><i class="fa-solid fa-boxes-stacked"></i> Gestionar Inventario</h3>
+                <h3 class="text-center mt-4"><i class="fa-solid fa-boxes-stacked"></i> Gestionar Inventario</h3>
             </div>
-            
+
             <div id="imglog">
                 <img id="logo" src="../../../public/img/logo2.svg" alt="Logo">
             </div>
-            
+
         </section>
-        <section id="busq_btn" >
+        <section id="busq_btn">
             <div id="busq">
                 <label><i class="fa-solid fa-magnifying-glass lupa"></i></label>
                 <input id="campobus" type="text" placeholder="Buscar">
@@ -98,14 +100,14 @@ if (!isset($_SESSION['usuario'])) {
         </section>
         <section>
             <?php
-            if (isset($_SESSION['msg']) && isset($_SESSION['color']) ) { ?>
+            if (isset($_SESSION['msg']) && isset($_SESSION['color'])) { ?>
 
                 <div class="alert alert-<?= $_SESSION['color']; ?> alert-dismissible fade show" role="alert">
                     <?= $_SESSION['msg']; ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 
-            <?php 
+            <?php
                 unset($_SESSION['color']);
                 unset($_SESSION['msg']);
             }  ?>
@@ -137,13 +139,12 @@ if (!isset($_SESSION['usuario'])) {
                 <thead>
                     <tr>
                         <th class="first">ID</th>
-                        <th  id='nombre'>Nombre</th>
+                        <th id='nombre'>Nombre</th>
                         <th id='img'>Imagen</th>
                         <th id='desc'>Descripción</th>
                         <th id='precio'>Precio</th>
                         <th id='proveedor'>Proveedor</th>
-                        <th id='stock' class="last">Stock</th>
-
+                        <th id='stock'>Stock</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -152,14 +153,14 @@ if (!isset($_SESSION['usuario'])) {
                         echo "<tr>";
                         echo "<td class='first'>" . $row_productos['id'] . "</td>";
                         echo "<td>" . $row_productos['nombre'] . "</td>";
-                        ?>
-                        <td id="img"><img src="<?= $dir . $row_productos['id'] . '.jpg?n='.time( ); ?>" width="25%" style="padding: 2px;"></td>
-                        <?php 
-                        echo "<td class='descripcion-corta'>" . $row_productos['descripcion'] . "</td>";
+                    ?>
+                        <td id="img"><img src="<?= $dir . $row_productos['id'] . '.jpg?n=' . time(); ?>" width="25%" style="padding: 2px;"></td>
+                        <?php
+                        echo "<td class='descripcion-corta'> <a href='#' class='descripcion' data-bs-toggle='modal' data-bs-target='#descModal' data-bs-id=" . $row_productos['id'] . ">" . $row_productos['descripcion'] . "</a></td>";
                         echo "<td>$" . $row_productos['precio'] . "</td>";
                         echo "<td>" . $row_productos['proveedor'] . "</td>";
-                        echo "<td class='last'>" . $row_productos['stock'] . "</td>";
-                    ?>
+                        echo "<td>" . $row_productos['stock'] . "</td>";
+                        ?>
                     <?php echo "</tr>";
                     }
                     ?>
@@ -168,26 +169,24 @@ if (!isset($_SESSION['usuario'])) {
             <div class="paginador">
                 <ul>
                     <?php
-                    if ($pagina != 1){  
-                    
-                    ?> 
+                    if ($pagina != 1) {
+
+                    ?>
                         <li class="pag"><a href="?pagina=<?php echo 1; ?>" class="pag"><i class="fas fa-step-backward"></i></a></li>
                         <li class="pag"><a href="?pagina=<?php echo $pagina - 1; ?>" class="pag"><i class="fas fa-backward"></i></a></li>
 
-                    <?php 
-                        } 
-                        for ($i = 1; $i <= $total_paginas; $i++){
+                    <?php
+                    }
+                    for ($i = 1; $i <= $total_paginas; $i++) {
 
-                            if($i == $pagina){
-                                echo '<li class="pageSelected">'.$i.'</li>';
-                            }else{
-                                echo '<li><a href="?pagina='.$i.'">'.$i.'</a></li>';
-                            }
+                        if ($i == $pagina) {
+                            echo '<li class="pageSelected">' . $i . '</li>';
+                        } else {
+                            echo '<li><a href="?pagina=' . $i . '">' . $i . '</a></li>';
+                        }
+                    }
 
-                        }   
-
-                        if($pagina != $total_paginas)
-                        {
+                    if ($pagina != $total_paginas) {
                     ?>
                         <li><a href="?pagina=<?php echo $pagina + 1; ?>"><i class="fas fa-forward"></i></a></li>
                         <li><a href="?pagina=<?php echo $total_paginas; ?>"><i class="fas fa-step-forward"></i></a></li>
@@ -209,9 +208,110 @@ if (!isset($_SESSION['usuario'])) {
     ?>
 
     <!-- Integración Modales -->
+    <?php include 'addModal.php'; ?>
 
     <?php $proveedores->data_seek(0); ?>
 
+    <?php include 'editModal.php'; ?>
+    <?php include 'deleteModal.php'; ?>
+    <?php include 'descModal.php'; ?>
+
+
+    <script>
+        let addModal = document.getElementById('addModal')
+        let editModal = document.getElementById('editModal')
+        let deleteModal = document.getElementById('deleteModal')
+        let descModal = document.getElementById('descModal')
+
+        addModal.addEventListener('shown.bs.modal', event => {
+            addModal.querySelector('.modal-body #nombre').focus()
+        })
+
+        addModal.addEventListener('hide.bs.modal', event => {
+            addModal.querySelector('.modal-body #nombre').value = ""
+            addModal.querySelector('.modal-body #descripcion').value = ""
+            addModal.querySelector('.modal-body #precio').value = ""
+            addModal.querySelector('.modal-body #proveedor').value = ""
+            addModal.querySelector('.modal-body #stock').value = ""
+        })
+
+        editModal.addEventListener('hide.bs.modal', event => {
+            editModal.querySelector('.modal-body #nombre').value = ""
+            editModal.querySelector('.modal-body #img_prod').value = ""
+            editModal.querySelector('.modal-body #descripcion').value = ""
+            editModal.querySelector('.modal-body #precio').value = ""
+            editModal.querySelector('.modal-body #proveedor').value = ""
+            editModal.querySelector('.modal-body #stock').value = ""
+        })
+
+
+        editModal.addEventListener('shown.bs.modal', event => {
+            let button = event.relatedTarget
+            let id = button.getAttribute('data-bs-id')
+
+            let inputId = editModal.querySelector('.modal-body #id')
+            let inputNombre = editModal.querySelector('.modal-body #nombre')
+            let img = editModal.querySelector('.modal-body #img_prod')
+            let inputDescripcion = editModal.querySelector('.modal-body #descripcion')
+            let inputPrecio = editModal.querySelector('.modal-body #precio')
+            let inputProveedor = editModal.querySelector('.modal-body #proveedor')
+            let inputStock = editModal.querySelector('.modal-body #stock')
+
+            let url = "getProducto.php"
+            let formData = new FormData()
+            formData.append('id', id)
+
+            fetch(url, {
+                    method: "POST",
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+
+                    inputId.value = data.id
+                    inputNombre.value = data.nombre
+                    inputDescripcion.value = data.descripcion
+                    inputPrecio.value = data.precio
+                    inputProveedor.value = data.id_proveedor
+                    inputStock.value = data.stock
+                    img.src = '<?= $dir ?>' + data.id + '.jpg'
+
+                }).catch(err => console.log(err))
+
+        })
+        deleteModal.addEventListener('shown.bs.modal', event => {
+            let button = event.relatedTarget
+            let id = button.getAttribute('data-bs-id')
+            deleteModal.querySelector('.modal-footer #id').value = id
+        })
+
+        descModal.addEventListener('hide.bs.modal', event => {
+
+            descModal.querySelector('.modal-body #descripcion').innerHTML = ""
+
+        })
+
+        descModal.addEventListener('shown.bs.modal', event => {
+            let button = event.relatedTarget
+            let id = button.getAttribute('data-bs-id')
+
+            let inputDescripcion = descModal.querySelector('.modal-body #descripcion')
+
+            let url = "getProducto.php"
+            let formData = new FormData()
+            formData.append('id', id)
+
+            fetch(url, {
+                    method: "POST",
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+
+                    inputDescripcion.innerText = data.descripcion
+
+                }).catch(err => console.log(err))
+
+        })
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const campoBusqueda = document.getElementById("campobus");
@@ -220,11 +320,11 @@ if (!isset($_SESSION['usuario'])) {
 
             campoBusqueda.addEventListener("keyup", function() {
                 const textoBusqueda = campoBusqueda.value.toLowerCase();
-                
+
                 for (let i = 0; i < filas.length; i++) {
                     const datosFila = filas[i].getElementsByTagName("td");
                     let coincide = false;
-                    
+
                     for (let j = 0; j < datosFila.length; j++) {
                         if (datosFila[j].textContent.toLowerCase().includes(textoBusqueda)) {
                             coincide = true;
