@@ -44,7 +44,7 @@ include '../../../controller/mostrardatosperfil.php';
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/ventasven.php">
+                        <a href="ventasven.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>

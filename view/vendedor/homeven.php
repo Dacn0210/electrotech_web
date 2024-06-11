@@ -34,25 +34,25 @@ if (!isset($_SESSION['usuario'])) {
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="../homeven.php">
+                        <a href="homeven.php">
                             <i class="fa-solid fa-house"></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioven.php">
+                        <a href="inventario/inventarioven.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/ventasven.php">
+                        <a href="ventas/ventasven.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/facturasven.php">
+                        <a href="ventas/facturasven.php">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="text nav-text">Facturas</span>
                         </a>

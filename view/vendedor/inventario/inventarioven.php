@@ -38,7 +38,7 @@ $dir = "imgs/"
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioven.php">
+                        <a href="inventarioven.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
