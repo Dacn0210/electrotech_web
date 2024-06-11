@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
-$dir = "../../admin/inventario/imgs"
+$dir = "../../admin/inventario/img"
 
 ?>
 <!DOCTYPE html>
