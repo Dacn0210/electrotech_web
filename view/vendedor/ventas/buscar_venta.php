@@ -1,22 +1,18 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header("Location: /Electrotech/view/login.php");
-    exit();
-}
+include "../../../controller/sesion.php";
 
 $dir = "imgs/";
 
 if( isset($_REQUEST['busqueda']) && $_REQUEST['busqueda'] == '' )
 {
-    header("location: facturasven.php");
+    header("location: facturasadmin.php");
 }
 
 if( isset($_REQUEST['fecha_de']) || isset($_REQUEST['fecha_a']))
 {
     if( $_REQUEST['fecha_de'] == '' || $_REQUEST['fecha_a'] == '' )
     {
-        header("loaction: facturasven.php");
+        header("loaction: facturasadmin.php");
     }
 }
 
@@ -26,7 +22,7 @@ $fecha_a = '';
 
 if(!empty($_REQUEST['busqueda'])){
     if(!is_numeric($_REQUEST['busqueda'])){
-        header ("location: facturasven.php");
+        header ("location: facturasadmin.php");
     }
     $busqueda = strtolower($_REQUEST['busqueda']);
     $where = "id = $busqueda";
@@ -40,7 +36,7 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
     $buscar = '';
 
     if($fecha_de > $fecha_a){
-        header ("location: facturasven.php");
+        header ("location: facturasadmin.php");
     }else if ($fecha_de == $fecha_a){
         $where = "fecha LIKE '$fecha_de%'";
         $buscar = "fecha_de=$fecha_de&fecha_a=$fecha_a";
@@ -74,40 +70,45 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
         </header>
 
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="../homeven.php">
+                        <a href="../homeadmin.php">
                             <i class="fa-solid fa-house"></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioven.php">
+                        <a href="../inventario/inventarioadmin.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/ventasven.php">
+                        <a href="../gestionar/gestionarusuarios.php">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <span class="text nav-text">Gestionar</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="../ventas/ventasadmin.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/facturasven.php">
+                        <a href="../ventas/facturasadmin.php">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-                    
                 </ul>
             </div>
 
             <div class="bottom-content">
                 <li class="nav-link user-info">
                     <i class="fa-solid fa-user"></i>
-                    <span class="text nav-text">Vendedor(a)</span>
+                    <span class="text nav-text">Administrador(a)</span>
                 </li>
                 <li class="nav-link">
                     <a href="../configuracion/perfil.php">
@@ -116,17 +117,16 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="../../controller/logout.php">
+                    <a href="../../../controller/logout.php">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span class="text nav-text">Cerrar sesión</span>
                     </a>
                 </li>
             </div>
         </div>
-        </div>
     </nav>
     <section class="home">
-        <section id="encabezado">
+    <section id="encabezado">
             <h3 class="text-center mt-4"><i class="fa-solid fa-receipt"></i> Gestionar Facturas</h3>
             <img id="logo" src="../../../public/img/logo2.svg" alt="Logo">
         </section>
@@ -137,7 +137,7 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
             </form>
             <div class="fechsearch">
                 <h5>Buscar por Fecha</h5>
-                <form action="buscar_ventaven.php" method="get" class="form_search_date">
+                <form action="buscar_venta.php" method="get" class="form_search_date">
                     <label >Desde:</label>
                     <input type="date" name="fecha_de" id="fecha_de" value="<?php echo $fecha_de ?>" required>
                     <label >Hasta:</label>
@@ -145,7 +145,8 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
                     <button type="submit" class="btn_view"><i class="fas fa-search"></i></button>
                 </form>
             </div>
-            <a href="ventasven.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
+            <a href="ventasadmin.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
+            
         </section>
         <section>
             <?php
@@ -204,6 +205,19 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
                                 <td><span>$</span><?php echo $data["totalfactura"]; ?></td>
                                 <td class='last iconos'>
                                     <a class="btn_view view_factura" cl="<?php echo $data["id_cliente"] ?>" f="<?php echo $data["id"] ?>"><i class="fa-solid fa-eye"></i></a>
+
+                                    <?php 
+                                    if($data["estatus"] == 1){
+                                    ?>
+                                    <a  href='#' data-bs-toggle="modal" data-bs-target="#alertaModal" data-bs-id="<?php echo $data['id']; ?>" class="btn_anular anular_factura linkicono" fac="<?php echo $data['id']; ?>"><i class="fa-solid fa-ban"></i></a>
+                                    
+                                    <?php
+                                    }else{
+                                    ?>    
+                                    <a class="btn_anular anular_factura inactive" ><i class="fa-solid fa-ban"></i></a>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                     <?php }
@@ -244,6 +258,8 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
         </section>
     </section>
 
+    <?php include 'modal_alertaeliminar.php' ?>
+
     <script src="https://kit.fontawesome.com/909a90592e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
@@ -252,6 +268,13 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
+        let modal_alertaeliminar = document.getElementById('alertaModal')
+
+        modal_alertaeliminar.addEventListener('shown.bs.modal', event => {
+            let button = event.relatedTarget
+            let nit = button.getAttribute('data-bs-id')
+            modal_alertaeliminar.querySelector('.modal-footer #nit').value = nit
+        });
 
         $(document).ready(function() {
             $('.view_factura').click(function(e){

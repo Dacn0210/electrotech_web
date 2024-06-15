@@ -1,5 +1,4 @@
 <?php include '../../../controller/MostrarDatosPerfil.php' ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,14 +14,13 @@
 </head>
 
 <body>
-    <!-- Barra de navegación lateral -->
     <nav class="sidebar close">
         <header>
             <i class="fa-solid fa-bars toggle"></i>
         </header>
 
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="../homeven.php">
@@ -48,7 +46,6 @@
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-                    
                 </ul>
             </div>
 
@@ -77,11 +74,11 @@
         <div class="container head">
             <img id="logo" src="../../../public/img/logo2.svg" alt="logo">
         </div>
-        <h2><strong><i class="fa-solid fa-id-card"></i> Perfil de usuario</strong></h2>
+        <h2><strong><i class="fa-regular fa-id-card"></i> Perfil de usuario</strong></h2>
         <div class="container datos">
             <?php
             if (isset($_SESSION['success_message'])) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+                echo '<div class="alert alert-info alert-dismissible fade show" role="alert">';
                 echo $_SESSION['success_message'];
                 echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
                 echo '</div>';

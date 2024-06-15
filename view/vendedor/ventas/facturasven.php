@@ -1,9 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header("Location: /Electrotech/view/login.php");
-    exit();
-}
+include "../../../controller/sesion.php";
 
 $dir = "imgs/"
 
@@ -29,7 +25,7 @@ $dir = "imgs/"
         </header>
 
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="../homeven.php">
@@ -44,7 +40,7 @@ $dir = "imgs/"
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/ventasven.php">
+                        <a href="ventasven.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
@@ -55,7 +51,6 @@ $dir = "imgs/"
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-                    
                 </ul>
             </div>
 
@@ -71,28 +66,27 @@ $dir = "imgs/"
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="../../controller/logout.php">
+                    <a href="../../../controller/logout.php">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span class="text nav-text">Cerrar sesión</span>
                     </a>
                 </li>
             </div>
         </div>
-        </div>
     </nav>
     <section class="home">
-    <section id="encabezado">
+        <section id="encabezado">
             <h3 class="text-center mt-4"><i class="fa-solid fa-receipt"></i> Gestionar Facturas</h3>
             <img id="logo" src="../../../public/img/logo2.svg" alt="Logo">
         </section>
         <section id="busqueda">
-            <form action="buscar_ventaven.php" method="get" class="form_search">
+            <form action="buscar_venta.php" method="get" class="form_search">
                 <input id="busqueda" name="busqueda" type="text" placeholder="No. Factura">
                 <button type="submit" class="btn_search"><i class="fa-solid fa-magnifying-glass lupa"></i></button>
             </form>
             <div class="fechsearch">
                 <h5>Buscar por Fecha</h5>
-                <form action="buscar_ventaven.php" method="get" class="form_search_date">
+                <form action="buscar_venta.php" method="get" class="form_search_date">
                     <label>Desde:</label>
                     <input type="date" name="fecha_de" id="fecha_de" required>
                     <label>Hasta:</label>
@@ -100,8 +94,9 @@ $dir = "imgs/"
                     <button type="submit" class="btn_view"><i class="fas fa-search"></i></button>
                 </form>
             </div>
-            <a href="ventasadmin.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
+            <a href="ventasven.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
         </section>
+        
         <section>
             <?php
             require '../../../model/conexion.php';
@@ -126,7 +121,7 @@ $dir = "imgs/"
                     $result_register = mysqli_fetch_array($sql_registe);
                     $total_registro = $result_register['total_registro'];
 
-                    $por_pagina = 6;    
+                    $por_pagina = 10;
 
                     if (empty($_GET['pagina'])) {
                         $pagina = 1;
@@ -159,6 +154,19 @@ $dir = "imgs/"
                                 <td><span>$</span><?php echo $data["totalfactura"]; ?></td>
                                 <td class='last iconos'>
                                     <a class="btn_view view_factura" cl="<?php echo $data["id_cliente"] ?>" f="<?php echo $data["id"] ?>"><i class="fa-solid fa-eye"></i></a>
+
+                                    <?php
+                                    if ($data["estatus"] == 1) {
+                                    ?>
+                                        <a href='#' data-bs-toggle="modal" data-bs-target="#alertaModal" data-bs-id="<?php echo $data['id']; ?>" class="btn_anular anular_factura linkicono" fac="<?php echo $data['id']; ?>"><i class="fa-solid fa-ban"></i></a>
+
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <a class="btn_anular anular_factura inactive"><i class="fa-solid fa-ban"></i></a>
+                                    <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                     <?php }
@@ -168,26 +176,24 @@ $dir = "imgs/"
             <div class="paginador">
                 <ul>
                     <?php
-                    if ($pagina != 1){  
-                    
-                    ?> 
+                    if ($pagina != 1) {
+
+                    ?>
                         <li class="pag"><a href="?pagina=<?php echo 1; ?>" class="pag"><i class="fas fa-step-backward"></i></a></li>
                         <li class="pag"><a href="?pagina=<?php echo $pagina - 1; ?>" class="pag"><i class="fas fa-backward"></i></a></li>
 
-                    <?php 
-                        } 
-                        for ($i = 1; $i <= $total_paginas; $i++){
+                    <?php
+                    }
+                    for ($i = 1; $i <= $total_paginas; $i++) {
 
-                            if($i == $pagina){
-                                echo '<li class="pageSelected">'.$i.'</li>';
-                            }else{
-                                echo '<li><a href="?pagina='.$i.'">'.$i.'</a></li>';
-                            }
+                        if ($i == $pagina) {
+                            echo '<li class="pageSelected">' . $i . '</li>';
+                        } else {
+                            echo '<li><a href="?pagina=' . $i . '">' . $i . '</a></li>';
+                        }
+                    }
 
-                        }   
-
-                        if($pagina != $total_paginas)
-                        {
+                    if ($pagina != $total_paginas) {
                     ?>
                         <li><a href="?pagina=<?php echo $pagina + 1; ?>"><i class="fas fa-forward"></i></a></li>
                         <li><a href="?pagina=<?php echo $total_paginas; ?>"><i class="fas fa-step-forward"></i></a></li>
@@ -199,6 +205,8 @@ $dir = "imgs/"
         </section>
     </section>
 
+    <?php include 'modal_alertaeliminar.php' ?>
+
     <script src="https://kit.fontawesome.com/909a90592e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
@@ -206,31 +214,38 @@ $dir = "imgs/"
     <script src="../../../public/js/menulateral.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <script>    
+    <script>
+        let modal_alertaeliminar = document.getElementById('alertaModal')
+
+        modal_alertaeliminar.addEventListener('shown.bs.modal', event => {
+            let button = event.relatedTarget
+            let nit = button.getAttribute('data-bs-id')
+            modal_alertaeliminar.querySelector('.modal-footer #nit').value = nit
+        });
+
         $(document).ready(function() {
-            $('.view_factura').click(function(e){
+            $('.view_factura').click(function(e) {
                 e.preventDefault();
                 var codCliente = $(this).attr('cl');
                 var noFactura = $(this).attr('f');
 
-                generarPDF(codCliente,noFactura);
+                generarPDF(codCliente, noFactura);
             });
 
         });
 
-        function generarPDF(cliente,factura){
+        function generarPDF(cliente, factura) {
             var width = 1000;
             var height = 1000;
 
-            var x = parseInt((window.screen.width/2) - (width/2));
-            var y = parseInt((window.screen.height/2) - (height/2));
+            var x = parseInt((window.screen.width / 2) - (width / 2));
+            var y = parseInt((window.screen.height / 2) - (height / 2));
 
-            $url = 'factura/generaFactura.php?cl='+cliente+'&f='+factura;
-            window.open($url,"Factura","left="+x+",top="+y+",height="+height+",width"+width+",scrollbar=si,location=no,resizable=si,menubar=no");
-            }
-
+            $url = 'factura/generaFactura.php?cl=' + cliente + '&f=' + factura;
+            window.open($url, "Factura", "left=" + x + ",top=" + y + ",height=" + height + ",width" + width + ",scrollbar=si,location=no,resizable=si,menubar=no");
+        }
     </script>
-    
+
     <script src="../../../public/js/menulateral.js"></script>
 
 </body>

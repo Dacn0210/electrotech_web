@@ -13,8 +13,12 @@
 	include "../../../../model/conexion.php";
 	require_once 'dompdf/autoload.inc.php';
 	use Dompdf\Dompdf;
+	use Dompdf\Options;
 
-	$domPDF = new Dompdf();
+	$options = new Options();
+	$options->setIsRemoteEnabled(TRUE);
+
+	$domPDF = new Dompdf($options);
 
 	if(empty($_REQUEST['cl']) || empty($_REQUEST['f']))
 	{
@@ -48,7 +52,7 @@
 			$no_factura = $factura['nofactura'];
 
 			if($factura['estatus'] == 2){
-				$anulada = '<img class="anulada" src="../img/anulado.png" alt="Anulada">';
+				$anulada = '<img class="anulada" src="imgs/anulada.txt" alt="Anulada">';
 			}
 
 			$query_productos = mysqli_query($conexion,"SELECT p.nombre,dt.cantidad,dt.preciototal as precio_venta,(dt.cantidad * dt.preciototal) as precio_final

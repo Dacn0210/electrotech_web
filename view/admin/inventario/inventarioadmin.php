@@ -162,7 +162,7 @@ $dir = "imgs/"
                         ?>
                         <td id="img"><img src="<?= $dir . $row_productos['id'] . '.jpg?n='.time( ); ?>" width="25%" style="padding: 2px;"></td>
                         <?php 
-                        echo "<td class='descripcion-corta'>" . $row_productos['descripcion'] . "</td>";
+                        echo "<td class='descripcion-corta'> <a href='#' class='descripcion' data-bs-toggle='modal' data-bs-target='#descModal' data-bs-id=" . $row_productos['id'] . ">" . $row_productos['descripcion'] . "</a></td>";
                         echo "<td>$" . $row_productos['precio'] . "</td>";
                         echo "<td>" . $row_productos['proveedor'] . "</td>";
                         echo "<td>" . $row_productos['stock'] . "</td>";
@@ -226,12 +226,14 @@ $dir = "imgs/"
 
     <?php include 'editModal.php'; ?>
     <?php include 'deleteModal.php'; ?>
+    <?php include 'descModal.php'; ?>
 
 
     <script>
         let addModal = document.getElementById('addModal')
         let editModal = document.getElementById('editModal')
         let deleteModal = document.getElementById('deleteModal')
+        let descModal = document.getElementById('descModal')
         
         addModal.addEventListener('shown.bs.modal', event => {
             addModal.querySelector('.modal-body #nombre').focus()
@@ -292,6 +294,34 @@ $dir = "imgs/"
             let button = event.relatedTarget
             let id = button.getAttribute('data-bs-id')
             deleteModal.querySelector('.modal-footer #id').value = id
+        })
+
+        descModal.addEventListener('hide.bs.modal', event => {
+            
+            descModal.querySelector('.modal-body #descripcion').innerHTML = ""
+            
+        })
+
+        descModal.addEventListener('shown.bs.modal', event => {
+            let button = event.relatedTarget
+            let id = button.getAttribute('data-bs-id')
+
+            let inputDescripcion = descModal.querySelector('.modal-body #descripcion')
+
+            let url = "getProducto.php"
+            let formData = new FormData()
+            formData.append('id', id)
+
+            fetch(url, {
+                    method: "POST",
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+
+                    inputDescripcion.innerText = data.descripcion
+                
+                }).catch(err => console.log(err))
+
         })
     </script>
     <script>

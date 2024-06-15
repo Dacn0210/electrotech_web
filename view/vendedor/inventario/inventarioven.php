@@ -1,10 +1,12 @@
-<!-- NO BORRAR - IMPOTANTE!!!!! es lo que protege las vistas -->
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: /Electrotech/view/login.php");
     exit();
 }
+
+$dir = "../../admin/inventario/imgs/"
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,21 +15,21 @@ if (!isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electrotech | Inventario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../../public/img/icono.ico" />
     <link rel="stylesheet" href="../../../public/css/inventario.css">
 </head>
 
 <body>
-    <nav class="sidebar close">
+<nav class="sidebar close">
         <header>
             <i class="fa-solid fa-bars toggle"></i>
         </header>
 
         <div class="menu-bar">
-        <div class="menu">
+            <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="../homeven.php">
@@ -36,7 +38,7 @@ if (!isset($_SESSION['usuario'])) {
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioven.php">
+                        <a href="inventarioven.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
@@ -53,7 +55,6 @@ if (!isset($_SESSION['usuario'])) {
                             <span class="text nav-text">Facturas</span>
                         </a>
                     </li>
-                    
                 </ul>
             </div>
 
@@ -69,7 +70,7 @@ if (!isset($_SESSION['usuario'])) {
                     </a>
                 </li>
                 <li class="nav-link">
-                    <a href="../../controller/logout.php">
+                    <a href="../../../controller/logout.php">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span class="text nav-text">Cerrar sesión</span>
                     </a>
@@ -77,11 +78,10 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
     </nav>
-
     <section class="home">
         <section id="busqueda">
             <div>
-            <h3 class="text-center mt-4"><i class="fa-solid fa-boxes-stacked"></i> Gestionar Inventario</h3>
+            <h3 class="text-center mt-4"><i class="fa-solid fa-boxes-stacked"></i>Inventario</h3>
             </div>
             
             <div id="imglog">
@@ -142,7 +142,7 @@ if (!isset($_SESSION['usuario'])) {
                         <th id='desc'>Descripción</th>
                         <th id='precio'>Precio</th>
                         <th id='proveedor'>Proveedor</th>
-                        <th id='stock' class="last">Stock</th>
+                        <th class="last" id='stock'>Stock</th>
 
                     </tr>
                 </thead>
@@ -155,10 +155,10 @@ if (!isset($_SESSION['usuario'])) {
                         ?>
                         <td id="img"><img src="<?= $dir . $row_productos['id'] . '.jpg?n='.time( ); ?>" width="25%" style="padding: 2px;"></td>
                         <?php 
-                        echo "<td class='descripcion-corta'>" . $row_productos['descripcion'] . "</td>";
+                        echo "<td class='descripcion-corta'> <a href='#' class='descripcion' data-bs-toggle='modal' data-bs-target='#descModal' data-bs-id=" . $row_productos['id'] . ">" . $row_productos['descripcion'] . "</a></td>";
                         echo "<td>$" . $row_productos['precio'] . "</td>";
                         echo "<td>" . $row_productos['proveedor'] . "</td>";
-                        echo "<td class='last'>" . $row_productos['stock'] . "</td>";
+                        echo "<td class= 'last'>" . $row_productos['stock'] . "</td>";
                     ?>
                     <?php echo "</tr>";
                     }
@@ -212,6 +212,54 @@ if (!isset($_SESSION['usuario'])) {
 
     <?php $proveedores->data_seek(0); ?>
 
+    <?php include 'addModal.php'; ?>
+    <?php include 'descModal.php'; ?>
+
+
+    <script>
+        let addModal = document.getElementById('addModal')
+        let descModal = document.getElementById('descModal')
+
+        addModal.addEventListener('shown.bs.modal', event => {
+            addModal.querySelector('.modal-body #nombre').focus()
+        })
+
+        addModal.addEventListener('hide.bs.modal', event => {
+            addModal.querySelector('.modal-body #nombre').value = ""
+            addModal.querySelector('.modal-body #descripcion').value = ""
+            addModal.querySelector('.modal-body #precio').value = ""
+            addModal.querySelector('.modal-body #proveedor').value = ""
+            addModal.querySelector('.modal-body #stock').value = ""
+        })
+        
+        descModal.addEventListener('hide.bs.modal', event => {
+            
+            descModal.querySelector('.modal-body #descripcion').innerHTML = ""
+            
+        })
+
+        descModal.addEventListener('shown.bs.modal', event => {
+            let button = event.relatedTarget
+            let id = button.getAttribute('data-bs-id')
+
+            let inputDescripcion = descModal.querySelector('.modal-body #descripcion')
+
+            let url = "getProducto.php"
+            let formData = new FormData()
+            formData.append('id', id)
+
+            fetch(url, {
+                    method: "POST",
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+
+                    inputDescripcion.innerText = data.descripcion
+                
+                }).catch(err => console.log(err))
+
+        })
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const campoBusqueda = document.getElementById("campobus");

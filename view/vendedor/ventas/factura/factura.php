@@ -152,9 +152,11 @@ $total      = 0;
 
 		.anulada {
 			position: absolute;
-			left: 50%;
-			top: 50%;
+			left: 5%;
+			top: 40%;
 			transform: translateX(-50%) translateY(-50%);
+			width: 90%;
+			transform: rotate(-45deg);
 		}
 	</style>
 
@@ -164,7 +166,7 @@ $total      = 0;
 			<tr>
 				<td class="logo_factura">
 					<div>
-						<img src="img/logo.png" alt="logo" width="100">
+						<img src="imgs/logo.txt" alt="logo" width="150">
 					</div>
 				</td>
 				<td class="info_empresa">

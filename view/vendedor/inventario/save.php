@@ -4,26 +4,26 @@ session_start();
 
 require '../../../model/conexion.php';
 
-$id = $conexion->real_escape_string($_POST['id']);
 $nombre = $conexion->real_escape_string($_POST['nombre']);
 $descripcion = $conexion->real_escape_string($_POST['descripcion']);
 $precio = $conexion->real_escape_string($_POST['precio']);
 $proveedor = $conexion->real_escape_string($_POST['proveedor']);
 $stock = $conexion->real_escape_string($_POST['stock']);
 
-$sql = "UPDATE productos 
-SET nombre = '$nombre', descripcion = '$descripcion', precio = '$precio', id_proveedor = '$proveedor', stock = '$stock' WHERE id=$id";
+$sql = "INSERT INTO productos (precio, stock, id_proveedor, nombre, descripcion)
+VALUES ('$precio', '$stock', '$proveedor', '$nombre', '$descripcion')";
 
 if ($conexion->query($sql)) {
+    $id = $conexion->insert_id;
 
     $_SESSION['color'] = "success";
-    $_SESSION['msg'] = "Poducto actualizado exitosamente";
+    $_SESSION['msg'] = "Producto registrado exitosamente";
 
     if ($_FILES['img']['error'] == UPLOAD_ERR_OK) {
         $permitidos = array("image/jpg", "image/jpeg", "image/png");
         if (in_array($_FILES['img']['type'], $permitidos)) {
 
-            $dir = "imgs";
+            $dir = "../../admin/inventario/imgs";
 
             $info_img = pathinfo($_FILES['img']['name']);
             $info_img['extension'];
@@ -45,7 +45,7 @@ if ($conexion->query($sql)) {
     }
 } else {
     $_SESSION['color'] = "danger";
-    $_SESSION['msg'] = "Error al actualizar registro";
+    $_SESSION['msg'] = "Error al guardar la imagen";
 }
-
-header ('Location: inventarioadmin.php');
+echo '<script>window.location.href = "inventarioven.php";</script>';
+exit();
