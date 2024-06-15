@@ -4,8 +4,8 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: /Electrotech/view/login.php");
     exit();
 }
+include '../../../controller/mostrardatosperfil.php';
 ?>
-<?php include '../../../controller/MostrarDatosPerfil.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -110,16 +110,23 @@ if (!isset($_SESSION['usuario'])) {
             <?php include '../../../controller/ocultarcontra.php' ?>
             <?php include 'editarPerfilModal.php'; ?>
 
-            <p><strong>Nombre:</strong> <?php echo $usuarioData['nombre']; ?></p>
-            <p><strong>Nombre de usuario:</strong> <?php echo $usuarioData['username']; ?></p>
-            <p><strong>Email:</strong> <?php echo $usuarioData['email']; ?></p>
-            <p><strong>Contraseña:</strong> <?php echo hidePassword($usuarioData['password']); ?></p>
+            <?php
+            if (isset($_SESSION['usuarioData'])) {
+                $usuarioData = $_SESSION['usuarioData'];
+            ?>
+                <p><strong>Nombre:</strong> <?php echo htmlspecialchars($usuarioData['nombre']); ?></p>
+                <p><strong>Nombre de usuario:</strong> <?php echo htmlspecialchars($usuarioData['username']); ?></p>
+                <p><strong>Email:</strong> <?php echo htmlspecialchars($usuarioData['email']); ?></p>
+                <p><strong>Contraseña:</strong> <?php echo htmlspecialchars(hidePassword($usuarioData['password'])); ?></p>
+            <?php
+            } else {
+                echo "<p>No se encontraron los datos del usuario.</p>";
+            }
+            ?>
 
             <button id="editarPerfilBtn" class="linkicono" data-bs-toggle="modal" data-bs-target="#editarPerfilModal"><i class="fa-solid fa-pen-to-square"></i> Editar perfil</button>
         </div>
     </section>
-
-
 
     <script src="https://kit.fontawesome.com/909a90592e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
