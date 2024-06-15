@@ -81,6 +81,12 @@ header {
   margin: 0 30px 0 20px;
 }
 
+button.navbar-toggler {
+  border: none;
+}
+
+
+
 /* Estilos para botones en .cont-info */
 .cont-info button {
   font-weight: 500;
