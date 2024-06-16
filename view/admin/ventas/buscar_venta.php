@@ -172,7 +172,7 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
                     $result_register = mysqli_fetch_array($sql_registe);
                     $total_registro = $result_register['total_registro'];
 
-                    $por_pagina = 6;    
+                    $por_pagina = 8;    
 
                     if (empty($_GET['pagina'])) {
                         $pagina = 1;
