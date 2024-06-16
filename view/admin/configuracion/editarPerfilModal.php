@@ -1,3 +1,5 @@
+<?php include "../../../controller/mostrardatosperfil.php"; ?>
+
 <div class="modal fade" id="editarPerfilModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
