@@ -39,8 +39,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_email"])) {
 
             $mail->Subject = utf8_decode('Recuperación de contraseña');
             $mail->isHTML(true);
-            $mail->Body = 'Tu código de recuperación de contraseña es: ' . $codigo . 'e ingresa al siguiente enlace: https://electrotech.cloud/view/nuevacontrase%C3%B1a.php';
-
+            $mail->Body = '<!DOCTYPE html>
+                            <html lang="en">
+                                <head>
+                                    <meta charset="UTF-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    <style>
+                                        body {
+                                            line-height: 1.6;
+                                            margin: 0;
+                                            padding: 0;
+                                            background-color: #fAfAfA;
+                                        }
+                                        #cajita1 {
+                                            max-width: 600px;
+                                            margin: 20px auto;
+                                            padding: 20px;
+                                            background: #FAFAFA;
+                                            border-radius: 5px;
+                                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                        }
+                                        img {
+                                            display: block;
+                                            margin: 0 auto;
+                                            width: 30%;
+                                        }
+                                        h1 {
+                                            text-align: center;
+                                            font-size: xxx-large;
+                                            color: #014972;
+                                        }
+                                    </style>
+                                </head>
+                                <body>
+                                    <div id="cajita1">
+                                        <img src="https://i.ibb.co/42pW0xD/Logo.png" alt="Logo de la empresa">
+                                        <h3>Hola, '. $nombre .',</h3>
+                                        <p>Tu codigo de para restablecer tu contraseña es:</p>
+                                        <div class="container">
+                                            <h1>' . $codigo . '</h1>
+                                        </div>
+                                        <p>Ingresa al siguiente enlace: <a></a>https://electrotech.cloud/view/nuevacontrase%C3%B1a.php para seguir con el proceso de recuperacion de contraseña</p>
+                                    </div>
+                                    
+                                </body>
+                            </html>';
             $mail->send();
             header("Location: mensaje_enviado.php");
             exit();
