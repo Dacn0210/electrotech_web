@@ -5,14 +5,14 @@ $dir = "imgs/";
 
 if( isset($_REQUEST['busqueda']) && $_REQUEST['busqueda'] == '' )
 {
-    header("location: facturasadmin.php");
+    header("location: facturasven.php");
 }
 
 if( isset($_REQUEST['fecha_de']) || isset($_REQUEST['fecha_a']))
 {
     if( $_REQUEST['fecha_de'] == '' || $_REQUEST['fecha_a'] == '' )
     {
-        header("loaction: facturasadmin.php");
+        header("loaction: facturasven.php");
     }
 }
 
@@ -22,7 +22,7 @@ $fecha_a = '';
 
 if(!empty($_REQUEST['busqueda'])){
     if(!is_numeric($_REQUEST['busqueda'])){
-        header ("location: facturasadmin.php");
+        header ("location: facturasven.php");
     }
     $busqueda = strtolower($_REQUEST['busqueda']);
     $where = "id = $busqueda";
@@ -36,13 +36,13 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
     $buscar = '';
 
     if($fecha_de > $fecha_a){
-        header ("location: facturasadmin.php");
+        header ("location: facturasven.php");
     }else if ($fecha_de == $fecha_a){
         $where = "fecha LIKE '$fecha_de%'";
         $buscar = "fecha_de=$fecha_de&fecha_a=$fecha_a";
     }else{
         $f_de = $fecha_de.' 00:00:00';
-        $f_a = $fecha_a.'23:59:59';
+        $f_a = $fecha_a.' 23:59:59';
         $where = "fecha BETWEEN '$f_de' AND '$f_a'";
         $buscar = "fecha_de=$fecha_de&fecha_a=$fecha_a";
     }
@@ -146,7 +146,7 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
                     <button type="submit" class="btn_view"><i class="fas fa-search"></i></button>
                 </form>
             </div>
-            <a href="ventasadmin.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
+            <a href="ventasven.php" class="btn_nueva"><i class="fa-solid fa-plus"></i>Nueva Venta</a>
             
         </section>
         <section>
