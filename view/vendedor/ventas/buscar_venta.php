@@ -69,35 +69,35 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
             <i class="fa-solid fa-bars toggle"></i>
         </header>
 
+        <!-- Barra de navegación lateral -->
+    <nav class="sidebar close">
+        <header>
+            <i class="fa-solid fa-bars toggle"></i>
+        </header>
+
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="../homeadmin.php">
+                        <a href="../homeven.php">
                             <i class="fa-solid fa-house"></i>
                             <span class="text nav-text">Inicio</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../inventario/inventarioadmin.php">
+                        <a href="../inventario/inventarioven.php">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="text nav-text">Inventario</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../gestionar/gestionarusuarios.php">
-                            <i class="fa-solid fa-user-gear"></i>
-                            <span class="text nav-text">Gestionar</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="../ventas/ventasadmin.php">
+                        <a href="ventasven.php">
                             <i class="fa-solid fa-cart-plus"></i>
                             <span class="text nav-text">Facturacion</span>
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="../ventas/facturasadmin.php">
+                        <a href="../ventas/facturasven.php">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="text nav-text">Facturas</span>
                         </a>
@@ -108,7 +108,7 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
             <div class="bottom-content">
                 <li class="nav-link user-info">
                     <i class="fa-solid fa-user"></i>
-                    <span class="text nav-text">Administrador(a)</span>
+                    <span class="text nav-text">Vendedor(a)</span>
                 </li>
                 <li class="nav-link">
                     <a href="../configuracion/perfil.php">
@@ -124,6 +124,7 @@ if(!empty($_REQUEST['fecha_de']) && !empty($_REQUEST['fecha_a'])){
                 </li>
             </div>
         </div>
+    </nav>
     </nav>
     <section class="home">
     <section id="encabezado">
