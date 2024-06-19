@@ -9,10 +9,10 @@ if (isset($_POST['nit'])) {
     $query_anular = "CALL anular_factura($nit)";
 
     if ($conexion->query($query_anular)) {
-        // $_SESSION['msg'] = 'La factura se ha anulado correctamente.';
-        // $_SESSION['color'] = 'success';
+        $_SESSION['msg'] = 'La factura se ha anulado correctamente.';
+        $_SESSION['color'] = 'success';
 
-        header("Location: facturasadmin.php");
+        header("Location: facturasven.php");
         exit();
     } else {
         $_SESSION['msg'] = 'Error al anular la factura: ' . $conexion->error;
